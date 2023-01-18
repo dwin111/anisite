@@ -1,7 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { IProduct } from '../models';
+import React, { useEffect, useState } from 'react';
+import { IGenre, IProduct } from '../models';
 import { ErrorMessage } from './ErrorMessage';
+import Multiselect from "react-widgets/Multiselect";
+
+import "react-widgets/styles.css";
 
 const productData: IProduct = {
     id: 0,
@@ -16,11 +19,40 @@ const productData: IProduct = {
 
 }
 
+
+
 interface CreateProductProps{
     onCreate: (product: IProduct) => void
 }
 
-export function CreateProduct({onCreate}: CreateProductProps){
+export  function CreateProduct({onCreate}: CreateProductProps){
+
+    const [products, setProducts] = useState<IGenre[]>([]);
+
+    const [loading, setLoading] = useState<boolean>(false)
+    
+    var tags = ['none'];
+    var tags2 = products.map(product => tags.push(product.genre));
+        
+    async function fetchGenres() {
+        try 
+        {
+            setLoading(true);
+            const response = await axios.get<IGenre[]>('http://localhost:5112/api/Videos/getAllGenre');
+            setProducts(response.data);
+            setLoading(false);
+            console.log(response.data);
+        } 
+        catch (e: unknown) 
+        {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchGenres();
+    }, []);
+
 
     const [valueName, setValueName] = useState('')
     const [valueImg, setValueImg] = useState('')
@@ -30,6 +62,8 @@ export function CreateProduct({onCreate}: CreateProductProps){
     const [valueViews, setValueViews] = useState(1)
     const [valueRate, setValueRate] = useState(1)
     const [valueRateCount, setValueRateCount] = useState(1)
+
+     const [valueTag, setValueTag] = useState<string[]>([''])
 
     const [error, setError] = useState('')
 
@@ -48,6 +82,8 @@ export function CreateProduct({onCreate}: CreateProductProps){
         productData.numberViews = valueViews;
         productData.rate = valueRate;
         productData.rateCount = valueRateCount;
+        productData.tags = valueTag;
+
 
         const responce = await axios.post<IProduct>("http://localhost:5112/api/Videos/create", productData);
         console.log(responce)
@@ -140,10 +176,15 @@ export function CreateProduct({onCreate}: CreateProductProps){
             onChange={changeHendlerRateCount}
             />
 
-
+            <Multiselect                        
+                data={tags}
+                defaultValue={tags}
+                    onChange={value => setValueTag(value)}
+            />
             {error && <ErrorMessage error={error}/>}
 
             <button type="submit" className='py-2 px-4 border bg-yellow-400 hover:text-white'>Create</button>
         </form>
     )
 }
+

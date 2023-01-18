@@ -27,7 +27,7 @@ export function Navigation(){
                 <Link to="/about" className="hover:text-gray-300 hover:ease-in-out duration-100 hover:text-[21px]">Релізи</Link></div>         
 
             
-
+            <Link to="/register"><div className="w-[60px] h-[60px] bg-[#D9D9D9] rounded-[15px]"></div></Link>
         </nav>
     )
 }   

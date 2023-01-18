@@ -56,15 +56,12 @@ export function ViewMove() {
                     <div className="flex-col ">
                         <p className="text-[#FBFBFB] p-3 text-[15px] text-center">{product?.name}</p>
                         <span className='text-[#FBFBFB] font-light text-[12px] text-[#AAAAAA] '>Rate: 
-                            <span >{product?.rate}</span>
+                            <span >&nbsp;{product?.rate}</span>
                         </span>
                         <div>
                             <p className='text-[#FBFBFB] p-3 text-[10px]'>{product?.description}</p>                          
                         </div>
-                        <Multiselect                        
-                        data={product?.tags}
-                        defaultValue={product?.tags}
-/>
+                        <span className="text-[#FFFFFF] flex">Жанри: &nbsp;{product?.tags.map((tag) => <p> {tag}&nbsp;&nbsp; </p>)}</span>
                     </div>
                     <span className='text-[#FBFBFB] font-light text-[12px] flex items-end text-[#AAAAAA]'>{product?.numberViews}  
                         <span> переглядів</span>
