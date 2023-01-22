@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import $api from "../http";
 import { IProduct } from "../models";
 
 export function useProducts(){
@@ -17,7 +18,7 @@ export function useProducts(){
     {
       setError('');
       setLoading(true);
-      const response = await axios.get<IProduct[]>('http://localhost:5112/api/Videos/getAll');
+      const response = await $api.get<IProduct[]>('http://localhost:5112/api/Videos/getAll');
       setProducts(response.data);
       setLoading(false);
     } 

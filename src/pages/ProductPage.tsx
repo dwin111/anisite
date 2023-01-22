@@ -3,7 +3,7 @@ import { CreateProduct } from '../components/CreateProduct';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { Loader } from '../components/Loader';
 import { Modal } from '../components/Modal';
-import { Product } from '../components/Product';
+import  Product  from '../components/Product';
 import { ModalContext } from '../context/Modalcontext';
 import { useProducts } from '../hooks/products';
 import { IProduct } from '../models';
@@ -33,7 +33,7 @@ export function ProductPage(){
         
        {!loading && <div className="inline-block align-middle"><Shearch/></div>}
         
-        <div className="felx">{products.map(product => <Link to={`/view/${product.id}`}><Product product={product} key={product.id}/></Link>)}</div>
+        <div className="felx">{products.map(product => <Product product={product} key={product.id}/>)}</div>
 
         {modal && <Modal title="Create new product" onClose={close}>
           <CreateProduct onCreate={createHandler}/>

@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { FC, useContext } from 'react';
 import { Context } from '..';
 
-export function AboutPage(){
+const AboutPage: FC = () => {
     const {store} = useContext(Context);
     
     return (
@@ -14,3 +15,5 @@ export function AboutPage(){
         </div>
     )
 }
+
+export default observer(AboutPage)

@@ -16,8 +16,20 @@ export interface IGenre {
 }
 export interface IUser {
     id?: number
-    genre: string
+    name: string
+    urlIcon: string
+    favoritesId: number[]
 
+}
+
+export interface IAccount{
+    id?: number,
+    email?: string,
+    password?: string,
+    isActive: boolean,
+    acivateLink: string,
+    user: IUser,
+    role: number[]
 }
 
 export interface AuthResponce{

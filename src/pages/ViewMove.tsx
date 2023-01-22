@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProducts } from '../hooks/products';
 
@@ -7,11 +7,14 @@ import DropdownList from "react-widgets/DropdownList";
 import Multiselect from "react-widgets/Multiselect";
 
 import "react-widgets/styles.css";
+import { Context } from '..';
+import { observer } from 'mobx-react-lite';
 
-export function ViewMove() {
+const ViewMove: FC = ( ) => {
 
     const { id } = useParams();
     const [rate, setRate] = useState(0)
+    const {store} = useContext(Context);
     //const [product, setProduct] = useState<IProduct>()
     const {loading,error,products, AddProduct} = useProducts();
     const [valueImg, setValueImg] = useState('');
@@ -41,7 +44,7 @@ export function ViewMove() {
                     <div className="flex-col">
                         <img src={product?.urlimg} className="w-[1000px]" alt={product?.name} />    
                         <div className="">
-                            <div className="flex"> 
+                            {store.isAuth && <div className="flex"> 
                                 <DropdownList
                                 defaultValue="4"
                                 data={[1, 2, 3, 4, 5]}
@@ -50,7 +53,7 @@ export function ViewMove() {
                                 }}
                                 />
                                 <button type="button" className='py-2 px-4 border bg-yellow-400 hover:text-white' onClick={() => fetchProducts()}>Create</button>
-                            </div>
+                            </div>}
                         </div>
                     </div> 
                     <div className="flex-col ">
@@ -73,3 +76,5 @@ export function ViewMove() {
     );
 
 }
+
+export default observer(ViewMove)
